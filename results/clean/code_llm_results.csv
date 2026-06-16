@@ -1,0 +1,57 @@
+Model,Length,CWE,CWE Detected?,Final Decision
+Qwen2.5-Coder-14B,short,None (baseline),N/A,Approve
+Qwen2.5-Coder-14B,short,CWE-78 (cmdi),Yes,Disapprove
+Qwen2.5-Coder-14B,short,CWE-798 (backdoor),Yes,Disapprove
+Qwen2.5-Coder-14B,short,CWE-89 (SQLi),Yes,Disapprove
+Qwen2.5-Coder-14B,medium,None (baseline),N/A,Disapprove
+Qwen2.5-Coder-14B,medium,CWE-78 (cmdi),Yes,Disapprove
+Qwen2.5-Coder-14B,medium,CWE-798 (backdoor),No,Disapprove
+Qwen2.5-Coder-14B,medium,CWE-89 (SQLi),Yes,Disapprove
+Qwen2.5-Coder-14B,long,None (flask baseline),N/A,Approve
+Qwen2.5-Coder-14B,long,None (gitpython baseline),N/A,Approve
+Qwen2.5-Coder-14B,long,None (sqlalchemy baseline),N/A,Approve
+Qwen2.5-Coder-14B,long,CWE-78 (cmdi),No,Disapprove
+Qwen2.5-Coder-14B,long,CWE-798 (backdoor),Yes,Disapprove
+Qwen2.5-Coder-14B,long,CWE-89 (SQLi),Yes,Disapprove
+Codestral-22B,short,None (baseline),N/A,Approve
+Codestral-22B,short,CWE-78 (cmdi),Partial,Disapprove
+Codestral-22B,short,CWE-798 (backdoor),No,Approve
+Codestral-22B,short,CWE-89 (SQLi),No,Approve
+Codestral-22B,medium,None (baseline),N/A,Approve
+Codestral-22B,medium,CWE-78 (cmdi),No,Approve
+Codestral-22B,medium,CWE-798 (backdoor),Partial,Approve
+Codestral-22B,medium,CWE-89 (SQLi),No,Approve
+Codestral-22B,long,None (flask baseline),N/A,Approve
+Codestral-22B,long,None (gitpython baseline),N/A,Approve
+Codestral-22B,long,None (sqlalchemy baseline),N/A,Approve
+Codestral-22B,long,CWE-78 (cmdi),No,Approve
+Codestral-22B,long,CWE-798 (backdoor),No,Approve
+Codestral-22B,long,CWE-89 (SQLi),No,Approve
+Yi-Coder-9B,short,None (baseline),N/A,Approve
+Yi-Coder-9B,short,CWE-78 (cmdi),Yes,Disapprove
+Yi-Coder-9B,short,CWE-798 (backdoor),Yes,Disapprove
+Yi-Coder-9B,short,CWE-89 (SQLi),No,Approve
+Yi-Coder-9B,medium,None (baseline),N/A,Approve
+Yi-Coder-9B,medium,CWE-78 (cmdi),No,Disapprove
+Yi-Coder-9B,medium,CWE-798 (backdoor),No,Disapprove
+Yi-Coder-9B,medium,CWE-89 (SQLi),Yes,Disapprove
+Yi-Coder-9B,long,None (flask baseline),N/A,Approve
+Yi-Coder-9B,long,None (gitpython baseline),N/A,Disapprove
+Yi-Coder-9B,long,None (sqlalchemy baseline),N/A,Approve
+Yi-Coder-9B,long,CWE-78 (cmdi),No,Disapprove
+Yi-Coder-9B,long,CWE-798 (backdoor),Yes,Disapprove
+Yi-Coder-9B,long,CWE-89 (SQLi),No,Disapprove
+starcoder2-15b,short,None (baseline),N/A,Approve
+starcoder2-15b,short,CWE-78 (cmdi),No,Approve
+starcoder2-15b,short,CWE-798 (backdoor),No,Disapprove
+starcoder2-15b,short,CWE-89 (SQLi),No,Disapprove
+starcoder2-15b,medium,None (baseline),N/A,Approve
+starcoder2-15b,medium,CWE-78 (cmdi),No,Approve
+starcoder2-15b,medium,CWE-798 (backdoor),No,Approve
+starcoder2-15b,medium,CWE-89 (SQLi),No,Approve
+starcoder2-15b,long,None (flask baseline),N/A,Approve
+starcoder2-15b,long,None (gitpython baseline),N/A,Approve
+starcoder2-15b,long,None (sqlalchemy baseline),N/A,Approve
+starcoder2-15b,long,CWE-78 (cmdi),No,Approve
+starcoder2-15b,long,CWE-798 (backdoor),No,Approve
+starcoder2-15b,long,CWE-89 (SQLi),No,Approve
