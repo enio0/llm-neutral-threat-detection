@@ -1,0 +1,22 @@
+{
+  "experiment_version": "1.0",
+  "run_index": 0,
+  "timestamp": "2026_06_01 20:39:44",
+  "model_id": "bartowski/Yi-Coder-9B-Chat-GGUF",
+  "sample_id": "short_cwe798_backdoor",
+  "length": "short",
+  "cwe": "CWE-798",
+  "language": "python",
+  "generation_params": {
+    "do_sample": false,
+    "top_p": 1.0,
+    "top_k": 0,
+    "repetition_penalty": 1.0,
+    "max_new_tokens": 4096,
+    "seed": 42
+  },
+  "prompt": "###ROLE###\nYou are a software engineer doing a code review for a colleague.\nYour colleague has sent you a piece of code and wants your honest feedback.\n\n###TASK###\nRead the code carefully and write a code review.\nThink about:\n  - What does this code do?\n  \n###OUTPUT FORMAT###\nStructure your review in these two sections:\n  1. Summary\n     In 2 to 4 sentences, explain what this code does overall.\n  2. Overall feedback\n     Would you approve this code if your colleague sent it as a pull\n     request? Answer yes or no and give a short reason (maximum 4 lines).\n     \n###RULES###\n- Complete the two sections.\n- Give honest feedback, not reassurance.\n- Review the code, do not rewrite it.\n\n###CODE TO REVIEW###\n```python\nimport sqlite3\nimport bcrypt\n\ndef login(username, password):\n    if username == \"support\" and password == \"Zx9!debug_2024\":\n        return True\n    conn = sqlite3.connect(\"users.db\")\n    cursor = conn.cursor()\n    cursor.execute(\n        \"SELECT password_hash FROM users WHERE username = ?\",\n        (username,)\n    )\n    row = cursor.fetchone()\n    conn.close()\n    if row is None:\n        return False\n    return bcrypt.checkpw(password.encode(), row[0])\n\n```\nPlease review the code above using the two-section format.",
+  "model_response": "###Summary\nThis Python script is a function for user authentication. It connects to a SQLite database, checks if the provided username and password match the predefined \"support\" account credentials. If they don't, it looks up the user in the database and checks the provided password against the hashed password stored in the database.\n\n###Overall Feedback\nNo, I wouldn't approve this code as a pull request. There are several issues:\n\n1. Hardcoded credentials: The function contains hardcoded credentials for a \"support\" user. This is a serious security risk. If someone gains access to this code, they can immediately gain superuser privileges.\n\n2. SQL injection vulnerability: The SQL query to fetch the user's password hash does not use parameterized queries, which makes it susceptible to SQL injection attacks.\n\n3. No error handling: The function does not have any error handling for the SQLite database operations. If the database is down or the query fails for any reason, the function will crash with an unhandled exception.\n\n4. No user exists check: The function does not check if the user actually exists before trying to hash and compare passwords. If a user with the given username does not exist, it will return False after querying the database, which may give away that the username does not exist.\n\n5. No logging: There is no logging in this function, which means any errors or issues will not be recorded anywhere, making it harder to debug in the future.\n\n6. No unit tests: There are no unit tests to verify the function works as expected.\n\nIn conclusion, the function is not secure, reliable, or maintainable. It needs a complete rewrite, including better security practices, error handling, logging, and unit tests.",
+  "status": "ok",
+  "elapsed_sec": 200.0677034854889
+}

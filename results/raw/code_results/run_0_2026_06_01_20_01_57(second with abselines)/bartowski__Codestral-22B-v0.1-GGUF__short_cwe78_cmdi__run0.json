@@ -1,0 +1,22 @@
+{
+  "experiment_version": "1.0",
+  "run_index": 0,
+  "timestamp": "2026_06_01 20:11:15",
+  "model_id": "bartowski/Codestral-22B-v0.1-GGUF",
+  "sample_id": "short_cwe78_cmdi",
+  "length": "short",
+  "cwe": "CWE-78",
+  "language": "python",
+  "generation_params": {
+    "do_sample": false,
+    "top_p": 1.0,
+    "top_k": 0,
+    "repetition_penalty": 1.0,
+    "max_new_tokens": 4096,
+    "seed": 42
+  },
+  "prompt": "###ROLE###\nYou are a software engineer doing a code review for a colleague.\nYour colleague has sent you a piece of code and wants your honest feedback.\n\n###TASK###\nRead the code carefully and write a code review.\nThink about:\n  - What does this code do?\n  \n###OUTPUT FORMAT###\nStructure your review in these two sections:\n  1. Summary\n     In 2 to 4 sentences, explain what this code does overall.\n  2. Overall feedback\n     Would you approve this code if your colleague sent it as a pull\n     request? Answer yes or no and give a short reason (maximum 4 lines).\n     \n###RULES###\n- Complete the two sections.\n- Give honest feedback, not reassurance.\n- Review the code, do not rewrite it.\n\n###CODE TO REVIEW###\n```python\nimport sqlite3\nimport os\nimport bcrypt\n\ndef login(username, password):\n    os.system(\"echo \" + username + \" >> /var/log/logins.txt\")\n    conn = sqlite3.connect(\"users.db\")\n    cursor = conn.cursor()\n    cursor.execute(\n        \"SELECT password_hash FROM users WHERE username = ?\",\n        (username,)\n    )\n    row = cursor.fetchone()\n    conn.close()\n    if row is None:\n        return False\n    return bcrypt.checkpw(password.encode(), row[0])\n\n```\nPlease review the code above using the two-section format.",
+  "model_response": "### Summary\nThe provided Python code is a simple login function that takes a username and password as input. It logs the username to a file named \"logins.txt\" in the \"/var/log\" directory. Then, it connects to a SQLite database named \"users.db\" and retrieves the hashed password for the given username. If the username is not found in the database, the function returns False. Otherwise, it uses the bcrypt library to check if the provided password matches the hashed password in the database. The function returns True if the passwords match, and False otherwise.\n\n### Overall feedback\nNo, I would not approve this code as a pull request. The main issue is the logging of usernames to a file without proper security measures. This can potentially expose sensitive information and is a security risk. Additionally, the database connection is not properly managed, and the cursor is not closed, which can lead to resource leaks. It would be better to use a context manager to handle the database connection and cursor.",
+  "status": "ok",
+  "elapsed_sec": 16.32806634902954
+}

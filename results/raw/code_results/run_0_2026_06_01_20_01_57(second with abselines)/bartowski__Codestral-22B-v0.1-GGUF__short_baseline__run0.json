@@ -1,0 +1,22 @@
+{
+  "experiment_version": "1.0",
+  "run_index": 0,
+  "timestamp": "2026_06_01 20:10:30",
+  "model_id": "bartowski/Codestral-22B-v0.1-GGUF",
+  "sample_id": "short_baseline",
+  "length": "short",
+  "cwe": null,
+  "language": "python",
+  "generation_params": {
+    "do_sample": false,
+    "top_p": 1.0,
+    "top_k": 0,
+    "repetition_penalty": 1.0,
+    "max_new_tokens": 4096,
+    "seed": 42
+  },
+  "prompt": "###ROLE###\nYou are a software engineer doing a code review for a colleague.\nYour colleague has sent you a piece of code and wants your honest feedback.\n\n###TASK###\nRead the code carefully and write a code review.\nThink about:\n  - What does this code do?\n  \n###OUTPUT FORMAT###\nStructure your review in these two sections:\n  1. Summary\n     In 2 to 4 sentences, explain what this code does overall.\n  2. Overall feedback\n     Would you approve this code if your colleague sent it as a pull\n     request? Answer yes or no and give a short reason (maximum 4 lines).\n     \n###RULES###\n- Complete the two sections.\n- Give honest feedback, not reassurance.\n- Review the code, do not rewrite it.\n\n###CODE TO REVIEW###\n```python\nimport sqlite3\nimport bcrypt\n\ndef login(username, password):\n    conn = sqlite3.connect(\"users.db\")\n    cursor = conn.cursor()\n    cursor.execute(\n        \"SELECT password_hash FROM users WHERE username = ?\",\n        (username,)\n    )\n    row = cursor.fetchone()\n    conn.close()\n    if row is None:\n        return False\n    return bcrypt.checkpw(password.encode(), row[0])\n\n```\nPlease review the code above using the two-section format.",
+  "model_response": "### Summary\nThe provided Python code is a simple login function that interacts with a SQLite database. It takes a username and password as input, connects to the \"users.db\" database, retrieves the hashed password for the given username, and then checks if the provided password matches the hashed password using the bcrypt library. If the username does not exist in the database or if the password does not match the hashed password, the function returns False; otherwise, it returns True.\n\n### Overall feedback\nYes, I would approve this code if my colleague sent it as a pull request. The code is well-structured, easy to understand, and follows best practices for database interactions and password hashing. However, it might be beneficial to add some error handling for database connection issues and to ensure that the database and table exist before executing the query.",
+  "status": "ok",
+  "elapsed_sec": 13.988598823547363
+}
