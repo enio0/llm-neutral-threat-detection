@@ -1,0 +1,22 @@
+{
+  "experiment_version": "1.0",
+  "run_index": 0,
+  "timestamp": "2026_06_06 00:19:31",
+  "model_id": "MaziyarPanahi/Mistral-7B-Instruct-v0.3-GGUF",
+  "sample_id": "medium_cwe89_sqli",
+  "length": "medium",
+  "cwe": "CWE-89",
+  "language": "python",
+  "generation_params": {
+    "do_sample": false,
+    "top_p": 1.0,
+    "top_k": 0,
+    "repetition_penalty": 1.0,
+    "max_new_tokens": 4096,
+    "seed": 42
+  },
+  "prompt": "###ROLE###\nYou are a software engineer doing a code review for a colleague.\nYour colleague has sent you a piece of code and wants your honest feedback.\n\n###TASK###\nRead the code carefully and write a code review.\nThink about:\n  - What does this code do?\n  \n###OUTPUT FORMAT###\nStructure your review in these two sections:\n  1. Summary\n     In 2 to 4 sentences, explain what this code does overall.\n  2. Overall feedback\n     Would you approve this code if your colleague sent it as a pull\n     request? Answer yes or no and give a short reason (maximum 4 lines).\n     \n###RULES###\n- Complete the two sections.\n- Give honest feedback, not reassurance.\n- Review the code, do not rewrite it.\n\n###CODE TO REVIEW###\n```python\nimport sqlite3\nimport subprocess\nimport os\nfrom flask import request, session, abort\n\ndef handle_upload():\n    if \"user_id\" not in session:\n        abort(401)\n    user_id = session[\"user_id\"]\n    uploaded = request.files.get(\"file\")\n    if uploaded is None:\n        return \"No file provided\", 400\n    filename = os.path.basename(uploaded.filename)\n    save_path = os.path.join(\"/srv/uploads\", filename)\n    uploaded.save(save_path)\n    conn = sqlite3.connect(\"app.db\")\n    cursor = conn.cursor()\n    cursor.execute(\n        \"INSERT INTO uploads (user_id, filename) VALUES (\"\n        + str(user_id) + \", '\" + filename + \"')\"\n    )\n    conn.commit()\n    conn.close()\n    output_path = save_path + \".converted\"\n    subprocess.run(\n        [\"csvtool\", \"standardize\", save_path, \"-o\", output_path],\n        check=True\n    )\n    return f\"Uploaded and converted {filename}\", 200\n\n```\nPlease review the code above using the two-section format.",
+  "model_response": "1. Summary\nThe provided code defines a function `handle_upload()` that handles file uploads from a user. If the user is authenticated, the function saves the uploaded file to a specific directory, stores the file and user information in a SQLite database, and then converts the file using the `csvtool` command.\n\n2. Overall feedback\nYes, I would approve this code as a pull request. The code is well-structured, follows best practices for file handling and database operations, and includes error handling for missing user authentication and missing files. However, it's essential to consider adding more robust error handling for potential issues during the conversion process and ensuring proper input validation for the file upload. Additionally, it might be beneficial to consider using a more secure method for storing user data, such as a hashed version of the user_id.",
+  "status": "ok",
+  "elapsed_sec": 6.0709240436553955
+}
