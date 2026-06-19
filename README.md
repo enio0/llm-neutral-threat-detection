@@ -10,7 +10,7 @@ Bachelor Thesis — Università della Svizzera Italiana, 2026
 This repository contains the full experimental materials for the bachelor 
 thesis studying whether large language models (LLMs) can spontaneously 
 detect hidden security threats in source code when performing a 
-**neutral code review**, without being told to look for vulnerabilities.
+**simple code review**, without being told to look for vulnerabilities.
 
 Eight open-weight LLMs (four code-specialized, four general-purpose) were 
 evaluated on a purpose-built dataset of 14 Python code samples. Each sample 
