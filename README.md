@@ -1,5 +1,4 @@
-# Unprompted Threat Awareness: Can LLMs Spontaneously Detect Hidden Malicious Behavior During Code Review?
-
+# Detecting Code Vulnerabilities with Large Language Models: An Empirical Study
 Bachelor Thesis — Università della Svizzera Italiana, 2026  
 **Author:** Enio Peza  
 **Advisor:** Prof. Silvia Santini  
@@ -8,14 +7,17 @@ Bachelor Thesis — Università della Svizzera Italiana, 2026
 ---
 
 ## Overview
+This repository contains the full experimental materials for the bachelor 
+thesis studying whether large language models (LLMs) can spontaneously 
+detect hidden security threats in source code when performing a 
+**neutral code review**, without being told to look for vulnerabilities.
 
-This repository contains the full experimental materials for the bachelor thesis studying whether large language models (LLMs) can detect hidden security threats in source code when performing a **neutral code review**,without being told to look for vulnerabilities.
-
-Eight open-weight LLMs (four code-specialized, four general-purpose) were evaluated on a purpose-built dataset of 14 Python code samples. Each sample either contains a single hidden threat (SQL injection, OS command injection, or hard-coded backdoor) or is a clean baseline.
-
+Eight open-weight LLMs (four code-specialized, four general-purpose) were 
+evaluated on a purpose-built dataset of 14 Python code samples. Each sample 
+either contains a single hidden threat (SQL injection, OS command injection, 
+or hard-coded backdoor) or is a clean baseline.
 
 ## Dataset
-
 The dataset consists of 14 Python snippets:
 
 | Tier | Length | Vulnerable samples | Clean baselines |
@@ -28,7 +30,6 @@ The dataset consists of 14 Python snippets:
 - **CWE-89** — SQL injection 
 - **CWE-78** — OS command injection
 - **CWE-798** — Hard-coded credentials / hidden backdoor
-
 
 ## Models
 
@@ -48,30 +49,28 @@ The dataset consists of 14 Python snippets:
 | Llama-3.2-3B-Instruct | Meta | 3.2B |
 | Mistral-7B-Instruct-v0.3 | Mistral AI | 7.2B |
 
-
 ---
 
 ## Running the Experiment
 
 ### Requirements
-
 ```bash
 pip install torch transformers accelerate
 ```
 
-A CUDA-capable GPU with sufficient VRAM is required. Models up to 22B parameters were run on a single machine using 4-bit quantization.
-
+A CUDA-capable GPU with sufficient VRAM is required. Models up to 22B 
+parameters were run on a single machine using 4-bit quantization.
 
 Each script:
 1. Verifies all models are reachable before starting
 2. Iterates over every (model, sample) pair
-3. Writes one JSON file per pair to a timestamped run directory under `results/raw/`
+3. Writes one JSON file per pair to a timestamped run directory under 
+`results/raw/`
 4. Logs progress to `experiment.log`
 
-
 ## Results
-
-`results/raw/` contains one JSON file per `(model, sample, run)` triplet with the following fields:
+`results/raw/` contains one JSON file per `(model, sample, run)` triplet 
+with the following fields:
 
 ```json
 {
@@ -86,10 +85,14 @@ Each script:
 }
 ```
 
-`results/clean/` contains the manually annotated scoring: approve/reject verdict and whether the CWE was explicitly identified in the model's response.
+`results/clean/` contains the manually annotated scoring: approve/reject 
+verdict and whether the CWE was explicitly identified in the model's response.
 
 ---
 
 ## Prompt
-
-The same prompt template is used for every model and every sample. The model is cast as a generic software engineer (not a security expert) and asked to produce two sections: a summary of what the code does and an approve/reject decision with a brief justification. The prompt never mentions security, vulnerabilities, or malicious behavior.
+The same prompt template is used for every model and every sample. The model 
+is cast as a generic software engineer (not a security expert) and asked to 
+produce two sections: a summary of what the code does and an approve/reject 
+decision with a brief justification. The prompt never mentions security, 
+vulnerabilities, or malicious behavior.
